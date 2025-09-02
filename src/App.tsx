@@ -1,22 +1,18 @@
-import { useState } from "react";
-import { Header } from "./components/header";
-import { WorkoutForm } from "./components/workout-form";
-import { WorkoutList } from "./components/workout-list";
-import type { Workout } from "./types/workout";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Layout } from "./components/layout";
+import { AddWorkout } from "./pages/add-workout";
+import { Home } from "./pages/home";
 
 function App() {
-  const [list, setList] = useState<Workout[]>([]);
-
-  function addWorkout(workout: Workout): void {
-    setList((prev) => [...prev, workout]);
-  }
-
   return (
-    <>
-      <Header />
-      <WorkoutForm onAdd={addWorkout} />
-      <WorkoutList workoutList={list} />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="/add" element={<AddWorkout />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
