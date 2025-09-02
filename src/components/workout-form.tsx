@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type { Intensity } from "../types/intensity";
 import type { Workout } from "../types/workout";
 
 interface WorkoutFormProps {
@@ -8,20 +9,26 @@ interface WorkoutFormProps {
 export function WorkoutForm({ onAdd }: WorkoutFormProps) {
   const [title, setTitle] = useState("");
   const [duration, setDuration] = useState(0);
-  const [intensity, setIntensity] = useState(1);
+  const [intensity, setIntensity] = useState<Intensity>(1);
   const [date, setDate] = useState("");
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
 
-    const workout = {
+    const workout: Workout = {
+      id: crypto.randomUUID(),
       title,
       duration,
       intensity,
       date,
     };
-    onAdd(workout as Workout);
-    console.log(workout);
+
+    onAdd(workout);
+
+    setTitle("");
+    setDuration(0);
+    setIntensity(1);
+    setDate("");
   }
 
   return (
@@ -60,7 +67,7 @@ export function WorkoutForm({ onAdd }: WorkoutFormProps) {
         type="number"
         id="workout-intensity"
         value={intensity}
-        onChange={(e) => setIntensity(Number(e.target.value))}
+        onChange={(e) => setIntensity(Number(e.target.value) as Intensity)}
         placeholder="Intensidade"
         min={1}
         max={5}
