@@ -31,6 +31,7 @@ export function WorkoutResume({ workout, removeWorkout }: WorkoutResumeProps) {
       </div>
 
       <h3>Data: {workout.date}</h3>
+      <p>Anotações: {workout.notes}</p>
     </div>
   );
 }
